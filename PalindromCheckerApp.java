@@ -1,34 +1,38 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.Scanner;
 
 public class PalindromCheckerApp {
-   public static void main(String[] args) {
 
-        String original = "level";
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
-        for (int i = 0; i < original.length(); i++) {
-            char ch = original.charAt(i);
-            stack.push(ch);      // LIFO
-            queue.add(ch);       // FIFO
-        }
+    // Method to check palindrome
+    public static boolean isPalindrome(String str) {
+        int left = 0;
+        int right = str.length() - 1;
 
-        boolean isPalindrome = true;
-        while (!stack.isEmpty()) {
-
-            char fromStack = stack.pop();     // LIFO
-            char fromQueue = queue.remove();  // FIFO
-
-            if (fromStack != fromQueue) {
-                isPalindrome = false;
-                break;
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
             }
+            left++;
+            right--;
         }
-        if (isPalindrome) {
-            System.out.println(original + " is a Palindrome");
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
+
+        // Normalize string: remove spaces & convert to lowercase
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        // Check palindrome
+        if (isPalindrome(normalized)) {
+            System.out.println("It is a Palindrome (Ignoring case & spaces)");
         } else {
-            System.out.println(original + " is NOT a Palindrome");
+            System.out.println("It is NOT a Palindrome");
         }
+
+        sc.close();
     }
 }
